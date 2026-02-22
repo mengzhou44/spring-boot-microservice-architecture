@@ -1,0 +1,27 @@
+server:
+  port: 8888
+
+spring:
+  application:
+    name: config-server
+  cloud:
+    config:
+      server:
+        git:
+          uri: ${GIT_CONFIG_URI:file:./config-repo}
+          default-label: main
+          search-paths: '{application}'
+          username: ${GIT_USERNAME:}
+          password: ${GIT_PASSWORD:}
+# Native profile: serve from filesystem without Git (use in Docker when config-repo is not a git repo)
+---
+spring:
+  config:
+    activate:
+      on-profile: native
+  cloud:
+    config:
+      server:
+        native:
+          # Single location + {application}.yml per service (native often does not replace {application} in path)
+          search-locations: ${NATIVE_SEARCH_LOCATIONS:file:./config-repo}

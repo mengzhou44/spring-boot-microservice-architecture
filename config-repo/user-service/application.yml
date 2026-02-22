@@ -1,0 +1,10 @@
+# Optional overrides for user-service (config server)
+buildNumber: "1.0.9"
+
+# Uncomment and adjust to override when using config server:
+# server:
+#   port: 8081
+# eureka:
+#   client:
+#     service-url:
+#       defaultZone: http://localhost:8761/eureka/

@@ -1,0 +1,58 @@
+# Build
+target/
+build/
+out/
+*.jar
+*.war
+*.ear
+*.class
+
+# Maven
+pom.xml.tag
+pom.releaseBackup
+pom.next
+release.properties
+dependency-reduced-pom.xml
+.mvn/timing.properties
+.mvn/wrapper/maven-wrapper.jar
+
+# Gradle (if ever used)
+.gradle/
+gradle-app.setting
+!gradle-wrapper.jar
+
+# IDE
+.idea/
+*.iml
+*.ipr
+*.iws
+.project
+.classpath
+.settings/
+.vscode/
+*.code-workspace
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs and temp
+*.log
+logs/
+tmp/
+temp/
+*.tmp
+*.bak
+*.swp
+*~
+
+# Env and secrets (do not commit real credentials)
+.env
+.env.local
+*.pem
+
+# Spring Boot
+spring-boot-devtools.properties
+
+# Cursor / editor
+.cursor/

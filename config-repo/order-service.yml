@@ -1,0 +1,2 @@
+# Served when search-locations is a single dir (native mode does not replace {application} in path)
+buildNumber: "2.1.0"

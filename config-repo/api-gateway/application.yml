@@ -1,0 +1,2 @@
+# Optional overrides for api-gateway (config server)
+buildNumber: "1.0.0"
