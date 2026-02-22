@@ -19,6 +19,11 @@ services:
       retries: 5
       start_period: 40s
 
+  zipkin:
+    image: openzipkin/zipkin:latest
+    ports:
+      - "9411:9411"
+
   eureka-server:
     build:
       context: .
@@ -38,18 +43,22 @@ services:
       - "8080:8080"
     environment:
       - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka-server:8761/eureka/
+      - MANAGEMENT_ZIPKIN_TRACING_ENDPOINT=http://zipkin:9411/api/v2/spans
+      - MANAGEMENT_TRACING_SAMPLING_PROBABILITY=1.0
     depends_on:
       - eureka-server
+      - zipkin
 
   user-service:
     build:
       context: .
       dockerfile: user-service/Dockerfile
-    ports:
-      - "8081:8081"
+    # No ports: gateway-only access (use http://localhost:8080/api/users/...)
     environment:
       - EUREKA_URI=http://eureka-server:8761/eureka/
       - SPRING_CONFIG_IMPORT=optional:configserver:http://config-server:8888
+      - MANAGEMENT_ZIPKIN_TRACING_ENDPOINT=http://zipkin:9411/api/v2/spans
+      - MANAGEMENT_TRACING_SAMPLING_PROBABILITY=1.0
     depends_on:
       config-server:
         condition: service_healthy
@@ -60,11 +69,12 @@ services:
     build:
       context: .
       dockerfile: order-service/Dockerfile
-    ports:
-      - "8082:8082"
+    # No ports: gateway-only access (use http://localhost:8080/api/orders/...)
     environment:
       - EUREKA_URI=http://eureka-server:8761/eureka/
       - SPRING_CONFIG_IMPORT=optional:configserver:http://config-server:8888
+      - MANAGEMENT_ZIPKIN_TRACING_ENDPOINT=http://zipkin:9411/api/v2/spans
+      - MANAGEMENT_TRACING_SAMPLING_PROBABILITY=1.0
     depends_on:
       config-server:
         condition: service_healthy

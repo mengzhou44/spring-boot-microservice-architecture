@@ -37,10 +37,6 @@ public class OrderService {
     }
 
     public Optional<UserDto> getUserForOrder(Long userId) {
-        try {
-            return Optional.of(userClient.getUserById(userId));
-        } catch (Exception e) {
-            return Optional.empty();
-        }
+         return Optional.of(userClient.getUserById(userId));
     }
 }
